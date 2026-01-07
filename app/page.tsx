@@ -12,14 +12,20 @@ export default function Home() {
           A cozy online bookstore with hand-picked recommendations for readers who love stories that warm the soul.
         </p>
         <div className="flex justify-center">
-          <Image
-            src="/bookshelf.png" // ✅ .png
-            alt="A wooden bookshelf filled with classic and modern books in soft warm lighting"
-            width={400}
-            height={300}
-            className="rounded-lg shadow-md"
-            priority
-          />
+          {/* Fallback background in case image fails */}
+          <div className="bg-zinc-200 dark:bg-zinc-800 rounded-lg shadow-md w-[400px] h-[300px] flex items-center justify-center">
+            <Image
+              src="/bookshelf.png"
+              alt="A wooden bookshelf filled with classic and modern books in soft warm lighting"
+              width={400}
+              height={300}
+              className="rounded-lg shadow-md object-cover"
+              priority
+              onError={(e) => {
+                console.error("Failed to load bookshelf.png", e);
+              }}
+            />
+          </div>
         </div>
       </header>
 
@@ -31,19 +37,19 @@ export default function Home() {
             {
               title: "The Quiet Bookstore",
               author: "Elena Rivers",
-              img: "/book1.png", // ✅ .png
+              img: "/book1.png",
               alt: "Cover of 'The Quiet Bookstore' showing a rainy street with a small lit bookstore",
             },
             {
               title: "Letters to My Future Self",
               author: "Marcus Lee",
-              img: "/book2.png", // ✅ .png
+              img: "/book2.png",
               alt: "Cover of 'Letters to My Future Self' featuring handwritten letters on a wooden desk",
             },
             {
               title: "Midnight Tea & Mysteries",
               author: "Priya Sharma",
-              img: "/book3.png", // ✅ .png
+              img: "/book3.png",
               alt: "Cover of 'Midnight Tea & Mysteries' with a teacup, candle, and old detective novel",
             },
           ].map((book, index) => (
@@ -56,7 +62,10 @@ export default function Home() {
                 alt={book.alt}
                 width={150}
                 height={220}
-                className="mb-4 rounded"
+                className="mb-4 rounded object-cover"
+                onError={(e) => {
+                  console.error(`Failed to load ${book.img}`, e);
+                }}
               />
               <h3 className="font-semibold text-lg">{book.title}</h3>
               <p className="text-zinc-500 dark:text-zinc-400 text-sm">{book.author}</p>
@@ -65,7 +74,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer / Call to Action */}
+      {/* Footer */}
       <footer className="py-10 px-6 text-center text-zinc-600 dark:text-zinc-400 text-sm">
         <p>Curated with care by Vinz Daniel S. Flores</p>
       </footer>
